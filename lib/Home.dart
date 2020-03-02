@@ -12,12 +12,22 @@ class _HomeState extends State<Home> {
       body: Container(
         padding: EdgeInsets.all(32),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image.asset("images/bitcoin.png"),
-            Text("R\$ 2347477"),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                  "R\$ 2347477",
+                style: TextStyle(
+                  fontSize: 32
+                ),
+              ),
+            ),
             RaisedButton(
               color: Colors.orange,
               textColor: Colors.white,
+              padding: EdgeInsets.fromLTRB(25, 15, 25, 15),
               child: Text(
                 "Atualizar",
                 style: TextStyle(
