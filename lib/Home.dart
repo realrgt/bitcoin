@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class Home extends StatefulWidget {
   @override
@@ -6,6 +9,26 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  String _preco = "0";
+
+  void _atualizarPreco() async {
+
+    String url = "https://blockchain.info/ticker";
+
+    http.Response response = await http.get(url);
+
+    Map<String, dynamic> retorno = json.decode( response.body );
+
+    print(response.statusCode.toString());
+    print( "Retorno: " + retorno["BRL"]["buy"].toString() );
+
+    setState(() {
+      this._preco = retorno["BRL"]["buy"].toString();
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +41,7 @@ class _HomeState extends State<Home> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                  "R\$ 2347477",
+                  "R\$ $_preco",
                 style: TextStyle(
                   fontSize: 32
                 ),
@@ -35,7 +58,7 @@ class _HomeState extends State<Home> {
                   fontSize: 20
                 ),
               ),
-              onPressed: () {},
+              onPressed: () => _atualizarPreco(),
             )
           ],
         ),
